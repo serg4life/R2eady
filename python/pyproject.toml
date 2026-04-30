@@ -1,0 +1,6 @@
+[tool.ruff]
+# Reglas a activar
+lint.select = ["E", "W", "F", "N"]  # E: errores PEP8, W: advertencias, F: errores de lógica, N: nombres
+
+# Carpetas o archivos a excluir
+exclude = ["venv", ".git", "__pycache__"]

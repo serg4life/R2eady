@@ -1,0 +1,14 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python",
+  "python.linting.enabled": false,         // Desactiva el linter de Python nativo
+  "ruff.enable": true,                     // Activa Ruff
+  "ruff.formatOnSave": true,               // Opcional: auto-fix al guardar
+  "editor.formatOnSave": true,
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true, // Aplica formato al guardar
+  "files.associations": {
+  }
+}
