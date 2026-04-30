@@ -1,0 +1,33 @@
+name: Python Lint CI
+
+on:
+  push:
+    branches: ["main", "develop"]
+
+permissions:
+  contents: write # to allow pushing code changes
+  packages: write
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+
+      - name: Install ruff
+        run: pip install --upgrade pip && pip install ruff
+      - name: Run Ruff auto-fix
+        run: |
+          ruff check . --fix
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Ruff auto-fixes" || echo "No changes to commit"
+          git push
