@@ -18,14 +18,14 @@ bare_init() {
         echo "A .gitignore file already exists. Skipping file creation."
     else
         # .gitignore básico
-        cat <<EOL > .gitignore
-        node_modules/
-        .env
-        dist/
-        build/
-        __pycache__/
-        .DS_Store
-        EOL
+        bash -c "cat <<'EOL' > .gitignore
+node_modules/
+.env
+dist/
+build/
+__pycache__/
+.DS_Store
+EOL"
     fi
 
     if [ ! -d .git ]; then
