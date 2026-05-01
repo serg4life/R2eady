@@ -1,0 +1,60 @@
+BasedOnStyle: LLVM
+
+# Indentación
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+
+# Límites de línea
+ColumnLimit: 100
+
+# Llaves
+BreakBeforeBraces: Allman
+
+# Espaciado
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesInParentheses: false
+SpacesInAngles: false
+
+# Funciones
+AllowShortFunctionsOnASingleLine: Empty
+AlwaysBreakAfterReturnType: None
+
+# Clases / structs
+IndentAccessModifiers: true
+
+# Includes
+SortIncludes: true
+IncludeBlocks: Regroup
+
+# Punteros y referencias
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+# Operadores
+BreakBeforeBinaryOperators: NonAssignment
+
+# Inicializadores
+ConstructorInitializerIndentWidth: 4
+BreakConstructorInitializers: BeforeComma
+
+# Switch / case
+IndentCaseLabels: true
+
+# Comentarios
+ReflowComments: true
+
+# Espacios en listas
+Cpp11BracedListStyle: true
+
+# Macros
+AlignConsecutiveMacros: true
+
+# Alineaciones
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+
+# Permitir una sola línea
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false

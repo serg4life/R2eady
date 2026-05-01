@@ -1,0 +1,33 @@
+name: C++ Lint & Format
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+
+permissions:
+  contents: write # to allow pushing code changes
+  packages: write
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+          
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format clang-tidy
+
+      - name: Check formatting
+        run: |
+          find . -regex '.*\.\(cpp\|hpp\|c\|h\)' \
+          -exec clang-format --dry-run --Werror {} +
+
+      - name: Run clang-tidy
+        run: |
+          clang-tidy $(find . -name '*.cpp') -- -std=c++17

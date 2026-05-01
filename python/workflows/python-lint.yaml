@@ -13,9 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all history for all branches and tags
+          
       - name: Set up Python 3.12
         uses: actions/setup-python@v3
         with:
@@ -23,6 +25,7 @@ jobs:
 
       - name: Install ruff
         run: pip install --upgrade pip && pip install ruff
+
       - name: Run Ruff auto-fix
         run: |
           ruff check . --fix
