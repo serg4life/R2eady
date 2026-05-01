@@ -60,7 +60,7 @@ init() {
 }
 
 init_git() {
-    if [ BARE_REPO = false ]; then
+    if [ ${BARE_REPO} = false ]; then
         init
     else
         bare_init
