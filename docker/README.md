@@ -1,0 +1,1 @@
+# Template para configurar un container generico de docker
