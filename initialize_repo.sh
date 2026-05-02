@@ -6,8 +6,6 @@ CONFIG_DIR="/etc/project-configurator"
 
 # Default container configuration name
 CONTAINERS_DIR="/etc/containers"
-CONTAINER_NAME="generic-dev"
-CONTAINER=${CONTAINERS_DIR}/${CONTAINER_NAME}
 
 ask_confirmation() {
     read -p "$1 (y/n) " answer
@@ -24,6 +22,7 @@ print_help() {
     echo "Options:"
     echo "                  --bare, -b                  Initializes a bare repository without creating additional files or directories."
     echo "                  --help, -h                  Displays this help message."
+    echo "                  --type, -t <container_id>   Specifies the container configuration to use when initializing with Docker (default: generic-dev)."
     echo ""
     echo "Configurations:"
     echo "                  docker <container_name>     Initializes a repository with a Docker container."
@@ -78,6 +77,17 @@ init_git() {
 
 init_docker() {
     local container_name="${1:-dev-container}"
+    local container_id="${2:-generic-dev}"
+
+    if [ -d "${CONTAINERS_DIR}/${container_id}" ]; then
+        CONTAINER="${CONTAINERS_DIR}/${container_id}"
+    else
+        echo "Error: Container configuration [${container_id}] not found in ${CONTAINERS_DIR}."
+        echo "Valid containers configurations:"
+        ls -ld /etc/containers/*/ | awk '{print $9}' | awk -F'/' '{print $(NF-1)}'
+        exit 1
+    fi
+
     if [ -d "${container_name}" ]; then
         ask_confirmation "A ${container_name} directory already exists. Do you want to overwrite its contents?"
         if [ $? -eq 0 ]; then
@@ -209,12 +219,23 @@ while [[ $# -gt 0 ]]; do
             exit 0
             ;;
         docker)
-            init_docker $2
-            if [ -n "$2" ]; then
-                shift 2
-            else
-                shift
-            fi
+            container_name="dev-container"
+            container_id="generic-dev"
+            shift
+            while [[ $# -gt 0 ]]; do
+                case "$1" in
+                    -t|--type)
+                        container_id="$2"
+                        shift 2
+                        ;;
+                    *)
+                        container_name="$1"
+                        shift
+                        ;;
+                esac
+            done
+            init_docker ${container_name} ${container_id}
+            exit 0
             ;;
         python)
             shift
