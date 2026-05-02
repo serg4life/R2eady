@@ -225,9 +225,6 @@ while [[ $# -gt 0 ]]; do
         bash)
             shift
             ;;
-        ia)
-            shift
-            ;;
         ai-toolset|aitools)
             init_aitools
             init_git
