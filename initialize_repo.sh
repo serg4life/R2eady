@@ -30,7 +30,6 @@ print_help() {
     echo "                  python                      Initializes a repository with Python configuration."
     echo "                  cpp                         Initializes a repository with C++ configuration."
     echo "                  bash                        Initializes a repository with Bash configuration."
-    echo "                  ia                          Initializes a repository with AI configuration."
     echo "                  ai-toolset                  Installs GitHub Copilot AI toolset (agents, skills, prompts, hooks)."
     echo ""
 }
@@ -101,7 +100,7 @@ init_docker() {
 
 init_aitools() {
     local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    local aitools_source="${script_dir}/ai-toolset/GENERAL"
+    local aitools_source="${CONFIG_DIR}/ai-toolset/GENERAL"
     local aitools_dest=".github"
 
     # Check if ai-toolset source exists
@@ -116,6 +115,18 @@ init_aitools() {
 
     echo "Installing AI Toolset..."
     echo ""
+
+    # Copy README.md for documentation
+    if [ -f "${aitools_source}/../README.md" ]; then
+        cp "${aitools_source}/../README.md" "${aitools_dest}/AI-TOOLSET-README.md"
+        echo "✓ README.md copied for documentation"
+    fi
+
+    # Copy coordination model for documentation
+    if [ -f "${aitools_source}/AGENT-COORDINATION.md" ]; then
+        cp "${aitools_source}/AGENT-COORDINATION.md" "${aitools_dest}/AGENT-COORDINATION.md"
+        echo "✓ Coordination model copied for documentation"
+    fi
 
     # Copy agents
     if [ -d "${aitools_source}/agents" ]; then
@@ -149,6 +160,7 @@ init_aitools() {
     if [ -d "${aitools_source}/hooks" ]; then
         mkdir -p "${aitools_dest}/hooks"
         cp -r "${aitools_source}/hooks/"* "${aitools_dest}/hooks/" 2>/dev/null || true
+        cp "${aitools_source}/hooks/hooks.json" "${aitools_dest}/hooks/"
         # Make hook scripts executable
         find "${aitools_dest}/hooks" -name "*.sh" -exec chmod +x {} \;
         echo "✓ Hooks installed"
@@ -168,19 +180,6 @@ init_aitools() {
 
     echo ""
     echo "✅ AI Toolset installation complete!"
-    echo ""
-    echo "📋 Installed components:"
-    echo "   - Copilot Agents (.github/agents/)"
-    echo "   - Reusable Skills (.github/skills/)"
-    echo "   - Pre-built Prompts (.github/prompts/)"
-    echo "   - Custom Instructions (.github/instructions/)"
-    echo "   - GitHub Hooks (.github/hooks/)"
-    echo ""
-    echo "🚀 Next steps:"
-    echo "   1. Review installed files in .github/"
-    echo "   2. Configure hooks in .github/hooks/*/hooks.json"
-    echo "   3. Commit changes: git add .github/"
-    echo "   4. Use agents and skills in Copilot Chat"
     echo ""
 }
 
