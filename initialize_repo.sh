@@ -2,7 +2,12 @@
 
 CWD=$(pwd)
 BARE_REPO=false
-CONFIG_REPO="/etc/project-configurator"
+CONFIG_DIR="/etc/project-configurator"
+
+# Default container configuration name
+CONTAINERS_DIR="/etc/containers"
+CONTAINER_NAME="generic-dev"
+CONTAINER=${CONTAINERS_DIR}/${CONTAINER_NAME}
 
 ask_confirmation() {
     read -p "$1 (y/n) " answer
@@ -14,14 +19,18 @@ ask_confirmation() {
 }
 
 print_help() {
-    echo "Usage:   $0 <options>"
-    echo "Options:  --bare, -b       Initialize a bare repository without creating additional files or directories."
-    echo "          --help, -h       Display this help message."
-    echo "          docker           Initialize a repository with Docker configuration."
-    echo "          python           Initialize a repository with Python configuration."
-    echo "          cpp              Initialize a repository with C++ configuration."
-    echo "          bash             Initialize a repository with Bash configuration."
-    echo "          ia               Initialize a repository with AI configuration."
+    echo ""
+    echo "Usage:            $0 <options> <configuration>"
+    echo "Options:"
+    echo "                  --bare, -b                  Initialize a bare repository without creating additional files or directories."
+    echo "                  --help, -h                  Display this help message."
+    echo ""
+    echo "Configurations:"
+    echo "                  docker <container_name>     Initialize a repository with Docker configuration."
+    echo "                  python                      Initialize a repository with Python configuration."
+    echo "                  cpp                         Initialize a repository with C++ configuration."
+    echo "                  bash                        Initialize a repository with Bash configuration."
+    echo "                  ia                          Initialize a repository with AI configuration."
     echo ""
 }
 
@@ -68,24 +77,24 @@ init_git() {
 }
 
 init_docker() {
-    if [ -d "dev-container" ]; then
-        ask_confirmation "A dev-container directory already exists. Do you want to overwrite its contents?"
+    local container_name="${1:-dev-container}"
+    if [ -d "${container_name}" ]; then
+        ask_confirmation "A ${container_name} directory already exists. Do you want to overwrite its contents?"
         if [ $? -eq 0 ]; then
-            rm -rf dev-container/
-            cp -r ${CONFIG_REPO}/docker/generic-dev dev-container
-            cp -r ${CONFIG_REPO}/docker/.devcontainer .
-            cp -r ${CONFIG_REPO}/docker/.vscode .
-            cp  ${CONFIG_REPO}/docker/run_docker.sh .
+            rm -rf ${container_name}/
+            cp -r ${CONTAINER} ${container_name}
+            cp  ${CONTAINERS_DIR}/starter .
         else
             echo "Skipping Docker configuration."
         fi
     else
-        cp -r ${CONFIG_REPO}/docker/generic-dev dev-container
-        cp -r ${CONFIG_REPO}/docker/.devcontainer .
-        cp -r ${CONFIG_REPO}/docker/.vscode .
-        cp  ${CONFIG_REPO}/docker/run_docker.sh .
+        cp -r ${CONTAINER} ${container_name}
+        cp  ${CONTAINERS_DIR}/starter .
     fi
-
+    echo "> To deploy the container use the following command:"
+    echo ""
+    ./starter -h
+    
     init_git
 }
 
@@ -115,8 +124,12 @@ while [[ $# -gt 0 ]]; do
             exit 0
             ;;
         docker)
-            init_docker
-            shift
+            init_docker $2
+            if [ -n "$2" ]; then
+                shift 2
+            else
+                shift
+            fi
             ;;
         python)
             shift
