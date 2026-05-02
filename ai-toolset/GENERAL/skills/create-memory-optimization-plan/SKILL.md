@@ -13,8 +13,8 @@ Create comprehensive memory optimization plans for embedded systems.
 Activate this skill when users ask about:
 
 - **Memory Optimization**: "How to reduce firmware size for constrained device"
-- **ROM/Flash Usage**: "Optimize flash memory usage for STM32F1 with 64KB"
-- **RAM Optimization**: "Minimize RAM usage for 32KB RAM device"
+- **ROM/Flash Usage**: "Optimize flash memory usage for embedded systems"
+- **RAM Optimization**: "Minimize RAM usage for embedded applications"
 - **Stack Analysis**: "Analyze and optimize stack usage"
 - **Heap Management**: "Design memory pooling for dynamic allocations"
 - **Code Size**: "Reduce compiled code size without losing features"
