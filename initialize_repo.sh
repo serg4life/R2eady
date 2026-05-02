@@ -83,13 +83,13 @@ init_docker() {
         if [ $? -eq 0 ]; then
             rm -rf ${container_name}/
             cp -r ${CONTAINER} ${container_name}
-            cp  ${CONTAINERS_DIR}/starter .
+            install -m 755 ${CONTAINERS_DIR}/starter .
         else
             echo "Skipping Docker configuration."
         fi
     else
         cp -r ${CONTAINER} ${container_name}
-        cp  ${CONTAINERS_DIR}/starter .
+        install -m 755 ${CONTAINERS_DIR}/starter .
     fi
     echo "> To deploy the container use the following command:"
     echo ""
