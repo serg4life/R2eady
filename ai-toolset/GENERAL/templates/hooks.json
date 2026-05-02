@@ -1,0 +1,16 @@
+{
+  "name": "nombre-hook",
+  "description": "Descripción breve del propósito del hook",
+  "version": "1.0.0",
+  "triggers": {
+    "pre-commit": false,
+    "post-commit": false,
+    "on-prompt": true,
+    "on-push": false
+  },
+  "config": {
+    "governance_level": "standard",
+    "log_path": "logs/hook-events.jsonl",
+    "enabled": true
+  }
+}

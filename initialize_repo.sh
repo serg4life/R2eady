@@ -22,15 +22,15 @@ print_help() {
     echo ""
     echo "Usage:            $0 <options> <configuration>"
     echo "Options:"
-    echo "                  --bare, -b                  Initialize a bare repository without creating additional files or directories."
-    echo "                  --help, -h                  Display this help message."
+    echo "                  --bare, -b                  Initializes a bare repository without creating additional files or directories."
+    echo "                  --help, -h                  Displays this help message."
     echo ""
     echo "Configurations:"
-    echo "                  docker <container_name>     Initialize a repository with Docker configuration."
-    echo "                  python                      Initialize a repository with Python configuration."
-    echo "                  cpp                         Initialize a repository with C++ configuration."
-    echo "                  bash                        Initialize a repository with Bash configuration."
-    echo "                  ia                          Initialize a repository with AI configuration."
+    echo "                  docker <container_name>     Initializes a repository with a Docker container."
+    echo "                  python                      Initializes a repository with Python configuration."
+    echo "                  cpp                         Initializes a repository with C++ configuration."
+    echo "                  bash                        Initializes a repository with Bash configuration."
+    echo "                  ia                          Initializes a repository with AI configuration."
     echo ""
 }
 
@@ -94,7 +94,7 @@ init_docker() {
     echo "> To deploy the container use the following command:"
     echo ""
     ./starter -h
-    
+
     init_git
 }
 
