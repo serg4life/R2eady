@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "name": "update-doc",
+  "description": "Automatically generates and updates documentation based on git diff changes",
+  "hooks": {
+    "prePush": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/update-doc/update-documentation.sh",
+        "cwd": ".",
+        "timeoutSec": 30,
+        "env": {
+          "LOG_LEVEL": "INFO",
+          "ANALYZE_CHANGES": "true"
+        }
+      }
+    ]
+  },
+  "configuration": {
+    "updateReadme": true,
+    "generateChangelog": true,
+    "generateApiDocs": true,
+    "docDirectory": "docs",
+    "changelogFile": "CHANGELOG.md",
+    "autoCommit": false,
+    "detectionThreshold": 0.7,
+    "supportedLanguages": ["python", "javascript", "typescript", "cpp", "java"]
+  }
+}

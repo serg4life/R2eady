@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "name": "generate-test",
+  "description": "Automatically generates unit tests based on git diff changes",
+  "hooks": {
+    "prePush": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/generate-test/generate-tests.sh",
+        "cwd": ".",
+        "timeoutSec": 30,
+        "env": {
+          "LOG_LEVEL": "INFO",
+          "ANALYZE_DIFF": "true"
+        }
+      }
+    ]
+  },
+  "configuration": {
+    "testLanguages": ["python", "javascript", "cpp"],
+    "outputDir": "tests/generated",
+    "coverageThreshold": 80,
+    "includeIntegrationTests": false,
+    "autoApprove": false,
+    "createCommit": false
+  }
+}
