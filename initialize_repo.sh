@@ -42,9 +42,16 @@ bare_init() {
     if [ ! -f .gitignore ]; then
         bash -c "cat <<'EOL' > .gitignore
 node_modules/
-.env
+.github/
+.vscode/
+.env/
+logs/
 dist/
 build/
+.venv/
+*.egg-info
+.pytest_cache/
+.ruff_cache/
 __pycache__/
 .DS_Store
 EOL"
