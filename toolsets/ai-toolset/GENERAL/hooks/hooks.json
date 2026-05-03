@@ -49,6 +49,45 @@
         },
         "timeoutSec": 10
         }
+    ],
+    "prePush": [
+        {
+            "type": "command",
+            "bash": ".github/hooks/generate-test/generate-tests.sh",
+            "cwd": ".",
+            "timeoutSec": 30,
+            "env": {
+            "LOG_LEVEL": "INFO",
+            "ANALYZE_DIFF": "true"
+            }
+        },
+        {
+            "type": "command",
+            "bash": ".github/hooks/update-doc/update-documentation.sh",
+            "cwd": ".",
+            "timeoutSec": 30,
+            "env": {
+            "LOG_LEVEL": "INFO",
+            "ANALYZE_CHANGES": "true"
+        }
+        }
     ]
+},
+    "configuration": {
+        "testLanguages": ["python", "javascript", "cpp"],
+        "outputDir": "tests/generated",
+        "coverageThreshold": 80,
+        "includeIntegrationTests": false,
+        "autoApprove": false,
+        "createCommit": false,
+        "updateReadme": true,
+        "generateChangelog": true,
+        "generateApiDocs": true,
+        "docDirectory": "docs",
+        "changelogFile": "CHANGELOG.md",
+        "autoCommit": false,
+        "detectionThreshold": 0.7,
+        "supportedLanguages": ["python", "javascript", "typescript", "cpp", "java"]
     }
 }
+

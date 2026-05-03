@@ -6,6 +6,7 @@ CONFIG_DIR="/etc/project-configurator"
 
 # Default container configuration name
 CONTAINERS_DIR="/etc/containers"
+TOOLSETS_DIR="${CONFIG_DIR}/toolsets"
 
 ask_confirmation() {
     read -p "$1 (y/n) " answer
@@ -110,7 +111,7 @@ init_docker() {
 
 init_aitools() {
     local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    local aitools_source="${CONFIG_DIR}/ai-toolset/GENERAL"
+    local aitools_source="${TOOLSETS_DIR}/ai-toolset/GENERAL"
     local aitools_dest=".github"
 
     # Check if ai-toolset source exists

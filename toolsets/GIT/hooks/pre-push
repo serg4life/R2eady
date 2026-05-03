@@ -1,0 +1,22 @@
+#!/bin/bash
+# .git/hooks/pre-commit
+# Auto-generated: Runs generate-test and update-doc hooks before commit
+
+set -e
+
+echo "🔍 Running pre-commit hooks..."
+
+# Run generate-test hook
+echo "📝 Generating tests..."
+bash .github/hooks/generate-test/generate-tests.sh || {
+    echo "⚠️ Test generation failed (continuing...)"
+}
+
+# Run update-doc hook
+echo "📚 Updating documentation..."
+bash .github/hooks/update-doc/update-documentation.sh || {
+    echo "⚠️ Documentation update failed (continuing...)"
+}
+
+echo "✅ Pre-commit hooks completed"
+exit 0
