@@ -6,6 +6,7 @@ CONFIG_DIR="/etc/project-configurator"
 
 # Default container configuration name
 CONTAINERS_DIR="/etc/containers"
+# Toolsets directory
 TOOLSETS_DIR="${CONFIG_DIR}/toolsets"
 
 ask_confirmation() {
@@ -31,7 +32,19 @@ print_help() {
     echo "                  cpp                         Initializes a repository with C++ configuration."
     echo "                  bash                        Initializes a repository with Bash configuration."
     echo "                  ai-toolset                  Installs GitHub Copilot AI toolset (agents, skills, prompts, hooks)."
+    echo "                  devcontainer                Initializes a repository with Devcontainer configuration."
     echo ""
+}
+
+# UNDER DEVELOPMENT
+update_gitignore() {
+    if [ ! -f .gitignore ]; then
+        touch .gitignore
+    fi
+
+    bash -c "cat <<'EOL' >> .gitignore
+$1
+EOL"
 }
 
 bare_init() {
@@ -201,6 +214,24 @@ init_aitools() {
     echo ""
 }
 
+install_devcontainer() {
+    if [ -d ".devcontainer" ]; then
+        ask_confirmation "A .devcontainer directory already exists. Do you want to overwrite its contents?"
+        if [ $? -eq 0 ]; then
+            rm -rf .devcontainer/
+            cp -r ${TOOLSETS_DIR}/devcontainer/.devcontainer . 2>/dev/null || true
+            echo "✓ Devcontainer configuration installed"
+        else
+            echo "Skipping Devcontainer configuration."
+        fi
+    else
+        cp -r ${TOOLSETS_DIR}/devcontainer/.devcontainer . 2>/dev/null || true
+        echo "✓ Devcontainer configuration installed"
+    fi
+    return 0
+}
+
+# Main script logic
 cd ${CWD}
 
 if [ $# -eq 0 ]; then
@@ -243,15 +274,21 @@ while [[ $# -gt 0 ]]; do
                 esac
             done
             init_docker ${container_name} ${container_id}
-            exit 0
             ;;
         python)
+            echo "Python configuration is not implemented yet. Initializing basic repository structure."
             shift
             ;;
         cpp)
+            echo "C++ configuration is not implemented yet. Initializing basic repository structure."
             shift
             ;;
         bash)
+            echo "Bash configuration is not implemented yet. Initializing basic repository structure."
+            shift
+            ;;
+        devcontainer)
+            install_devcontainer
             shift
             ;;
         ai-toolset|aitools)

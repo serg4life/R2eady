@@ -8,8 +8,7 @@ default: install
 .PHONY: install
 install:
 	install -d $(DESTDIR)${CONFIG_DIR}
-	cp -r docker $(DESTDIR)${CONFIG_DIR}/
-	cp -r ai-toolset $(DESTDIR)${CONFIG_DIR}/
+	cp -r toolsets $(DESTDIR)${CONFIG_DIR}/
 	install -m 755 initialize_repo.sh $(DESTDIR)/usr/bin/$(NAME)
 
 
